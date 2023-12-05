@@ -12,19 +12,7 @@ public class Day03 {
         char[][] input = AocUtils.stringsToCharArrays(AocUtils.readFileLines("./input/day03.txt"));
         System.out.println("Puzzle 1: " + puzzle1(input));
         System.out.println("Puzzle 2: " + puzzle2(input));
-        String[] dummyInput = {
-            "467..114..", 
-            "...*......", 
-            "..35..633.", 
-            "......#...", 
-            "617*......", 
-            ".....+.58.", 
-            "..592.....", 
-            "......755.", 
-            "...$.*....", 
-            ".664.598.."
-        }; 
-        System.out.println(Arrays.toString(partNumbersIn(AocUtils.stringsToCharArrays(dummyInput))));
+
     }
     
     private static String puzzle1(char[][] input) {
@@ -79,7 +67,7 @@ public class Day03 {
         List<Number> r = res.stream().distinct().collect(Collectors.toList());
         return r.toArray(new Number[r.size()]);
     }
-
+    
     private static Optional<Number>[][] partNumberReferencesFrom(char[][] input) {
         // returns an array with the same shape as <input> looking like this:
         // A = a number at (0, 5) with length 4;
@@ -89,13 +77,15 @@ public class Day03 {
         // |B|B|B| | | | | | | |
         // 
 
-        @SuppressWarnings("unchecked") // why java, why????
+        @SuppressWarnings("unchecked")
         Optional<Number>[][] numberReferences = (Optional<Number>[][]) new Optional[input.length][];
 
         for (int i = 0; i < numberReferences.length; i++) {
-            numberReferences[i] = (Optional<Number>[]) new Optional[input[i].length];
-            Arrays.fill(numberReferences[i], Optional.empty());
-        }
+            @SuppressWarnings("unchecked")
+            Optional<Number>[] line = (Optional<Number>[]) new Optional[input[i].length];
+            Arrays.fill(line, Optional.empty());
+            numberReferences[i] = line;
+        }        
 
         Number[] nums = partNumbersIn(input);
 
